@@ -4,6 +4,28 @@ This repository contains the speaker reassignment tool, that was used in the
 paper "Once more Diarization: Improving meeting transcription systems through
 segment-level speaker reassignment".
 
+Please read the paper for more information (ToDo: Add a hyperlink, once it is freely accessible).
+
+# Installation
+
+```bash
+git clone https://github.com/fgnt/speaker_reassignment.git
+cd speaker_reassignment
+pip install -e .
+```
+
+# Usage
+
+Assuming, you have a JSON file `hyp.json` with the segments (see next section
+for the content), you can run the reassignments with the following commands:
+
+```bash
+python -m speaker_reassignment sc hyp.json  # Just spectral clustering
+python -m speaker_reassignment sc_step hyp.json  # Spectral clustering with step-wise attenuation
+python -m speaker_reassignment sc_poly hyp.json  # Spectral clustering with polynomial attenuation
+python -m speaker_reassignment kmeans hyp.json  # Just k-means
+```
+Each will write a new JSON file, e.g. `hyp_SLR_SC_step0.25.json` with the reassignments.
 
 # Input format
 
