@@ -59,6 +59,7 @@ class ResNet34(pt.Module):
             activation_fn=activation_fn,
             pre_activation=pre_activation,
             norm=norm,
+            normalize_skip_convs=True,
         )
         self.output_convolution = Conv2d(channels[-1], dvec_dim, kernel_size=3, stride=(2, 1), bias=False,
                                          activation_fn='relu', norm=norm, pre_activation=True)

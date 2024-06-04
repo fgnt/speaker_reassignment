@@ -111,6 +111,7 @@ class PretrainedModel:
             import urllib.request
 
             def download():
+                print(f'Downloading {url} to {ckpt}')
                 ckpt.parent.mkdir(parents=True, exist_ok=True)
                 urllib.request.urlretrieve(url, ckpt)
 

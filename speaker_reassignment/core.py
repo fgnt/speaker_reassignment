@@ -200,8 +200,8 @@ class Prepare:
             'loaded_cached': 0,
             'user_provided': 0,
         }
-        if self.dump and not dump_dir.exists():
-            dump_dir.mkdir()
+        if self.dump and dlp_mpi.IS_MASTER:
+            dump_dir.mkdir(exist_ok=True, parents=True)
 
         for session_id, data_rec in dlp_mpi.split_managed(
                 sorted(data_per_reco.items()), allow_single_worker=True):
@@ -363,7 +363,8 @@ class SC:
             all_data = dlp_mpi.collection.UnorderedList()
             for session_id, data_rec, n_clusters in prepare.json_to_per_reco(json, audio_path, num_speakers):
                 labels = self.get_new_labels(data_rec, n_clusters)
-                for d, l in zip(data_rec, labels, strict=True):
+                assert len(labels) == len(data_rec), (len(labels), len(data_rec))
+                for d, l in zip(data_rec, labels):
                     if l is not None:
                         d['speaker'] = str(l)
                         del d['emb']
