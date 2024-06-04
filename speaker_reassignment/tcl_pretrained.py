@@ -89,7 +89,7 @@ import numpy as np
 import torch
 
 from .dvectors import SpeakerNetModel, ResNet34
-
+import speaker_reassignment.utils
 
 class PretrainedModel:
     def __init__(
@@ -108,20 +108,13 @@ class PretrainedModel:
         """
         ckpt = Path(ckpt)
         if not ckpt.exists():
-            import urllib.request
-
-            def download():
-                print(f'Downloading {url} to {ckpt}')
-                ckpt.parent.mkdir(parents=True, exist_ok=True)
-                urllib.request.urlretrieve(url, ckpt)
-
             if consider_mpi:
                 import dlp_mpi
                 if dlp_mpi.IS_MASTER:
-                    download()
+                    speaker_reassignment.utils.download(url, ckpt)
                 dlp_mpi.barrier()
             else:
-                download()
+                speaker_reassignment.utils.download(url, ckpt)
 
         mdl_cfg = {
               "factory": SpeakerNetModel,

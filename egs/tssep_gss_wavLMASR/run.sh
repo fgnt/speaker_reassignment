@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Print the commands being run
+set -x
+
+# Exit on error
+set -e
+
 python download_and_prepare.py
 
 # This first call will be slow, as it will calculate the embeddings for all the audio files.

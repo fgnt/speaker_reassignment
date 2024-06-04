@@ -184,7 +184,10 @@ class Prepare:
          - Load json.
          - Compute embeddings if not present and not cached.
          - group by session_id
-            - yield session_id, data_rec
+            - yield session_id, data_rec, num_speakers
+
+        data_rec:
+           One entry in the json, with additional entries 'emb' and 'emb_samples'.
 
         """
         json = Path(json)
