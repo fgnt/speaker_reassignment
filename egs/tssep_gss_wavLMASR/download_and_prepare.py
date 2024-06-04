@@ -5,7 +5,8 @@ import shlex
 from pathlib import Path
 import re
 import json
-
+import time
+import sys
 
 class c:
     green = '\033[92m'
@@ -18,6 +19,25 @@ def run(cmd):
     subprocess.run(cmd, shell=isinstance(cmd, str), check=True)
 
 
+class Reporthook:
+    start_time = 0
+
+    def __call__(self, count, block_size, total_size):
+        # https://blog.shichao.io/2012/10/04/progress_speed_indicator_for_urlretrieve_in_python.html
+        if count == 0:
+            self.start_time = time.time()
+            return
+        duration = time.time() - self.start_time
+        progress_size = int(count * block_size)
+        speed = int(progress_size / (1024 * duration))
+        percent = int(count * block_size * 100 / total_size)
+        sys.stdout.write(
+            "\r...%d%%, %d MB, %d KB/s, %d seconds passed" %
+            (percent, progress_size / (1024 * 1024), speed, duration)
+        )
+        sys.stdout.flush()
+
+
 def maybe_download(file):
     if Path(file).exists():
         print(f'Skipping download of {file}. Already exists.')
@@ -25,9 +45,7 @@ def maybe_download(file):
         import urllib.request
         url = f'https://huggingface.co/datasets/boeddeker/libri_css_tssep_gss_wavLMASR/resolve/main/{file}?download=true'
         print(f'Downloading {file} from {url}.')
-        with urllib.request.urlopen(url) as response:
-            with open(file, 'wb') as f:
-                f.write(response.read())
+        urllib.request.urlretrieve(url, file, Reporthook())
         print(f'Downloaded {file}.')
 
 
