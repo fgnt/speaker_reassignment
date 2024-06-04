@@ -22,8 +22,13 @@ def maybe_download(file):
     if Path(file).exists():
         print(f'Skipping download of {file}. Already exists.')
     else:
-        run(f'wget https://huggingface.co/boeddeker/libri_css_tssep_gss_wavLMASR/resolve/main/{file}')
-        # run(f'cp huggingface/{file} .')
+        import urllib.request
+        url = f'https://huggingface.co/datasets/boeddeker/libri_css_tssep_gss_wavLMASR/resolve/main/{file}?download=true'
+        print(f'Downloading {file} from {url}.')
+        with urllib.request.urlopen(url) as response:
+            with open(file, 'wb') as f:
+                f.write(response.read())
+        print(f'Downloaded {file}.')
 
 
 def main():
