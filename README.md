@@ -31,7 +31,7 @@ The `audio_path` is used to load the audio and calculate the embedding.
 Note: The `audio_path` should point to the audio path of the segment, and not
 to the full recording stream. This means, that start and end times are not used
 for slicing.
-The `speaker` is may be used, if you use a sticky algorithm, that tries to keep
+The `speaker` may be used, if you use a sticky algorithm, that tries to keep
 the speaker labels. If you do not use a sticky algorithm, the speaker labels
 are ignored.
 
@@ -67,10 +67,10 @@ extractor.
 If you use this code, please cite the following paper:
 
 ```
-@inproceedings{Boeddeker2018,
+@inproceedings{Boeddeker2024,
   title={Once more Diarization: Improving meeting transcription systems through segment-level speaker reassignment},
   author={Boeddeker, Christoph and Cord-Landwehr, Tobias and Haeb-Umbach, Reinhold},
-  booktitle={Submitted to Interspeech 2024},
+  booktitle={Accepted for Interspeech 2024},
   year={2024}
 }
 ```
