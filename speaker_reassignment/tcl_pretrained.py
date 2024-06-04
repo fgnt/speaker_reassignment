@@ -83,6 +83,7 @@ Full config:
 """
 
 import functools
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -94,9 +95,33 @@ class PretrainedModel:
     def __init__(
             self,
             # ckpt='/scratch/hpc-prf-nt2/cbj/cord/d_vector/yellow_inherent_elephant/checkpoints/ckpt_500000.pth',
-            ckpt='/scratch/hpc-prf-nt1/cbj/deploy/speaker_reassignment/egs/vmfmm/ckpt_yellow_inherent_elephant_500000.pth',
+            ckpt=Path(__file__).parent / 'yellow_inherent_elephant_ckpt_500000.pth',
+            url='https://huggingface.co/boeddeker/d_vector_yellow_inherent_elephant/resolve/main/ckpt_500000.pth?download=true',
             consider_mpi=False,
     ):
+        """
+
+        Args:
+            ckpt: The checkpoint file path or the path, where the checkpoint should be downloaded to.
+            url: The URL to download the checkpoint from, if it does not exist.
+            consider_mpi:
+        """
+        ckpt = Path(ckpt)
+        if not ckpt.exists():
+            import urllib.request
+
+            def download():
+                ckpt.parent.mkdir(parents=True, exist_ok=True)
+                urllib.request.urlretrieve(url, ckpt)
+
+            if consider_mpi:
+                import dlp_mpi
+                if dlp_mpi.IS_MASTER:
+                    download()
+                dlp_mpi.barrier()
+            else:
+                download()
+
         mdl_cfg = {
               "factory": SpeakerNetModel,
               # "loss": None,
