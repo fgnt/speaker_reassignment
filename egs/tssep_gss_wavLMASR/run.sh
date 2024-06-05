@@ -10,6 +10,7 @@ set -x
 python download_and_prepare.py
 
 # This first call will be slow, as it will calculate the embeddings for all the audio files.
+# You can prefix the command with `mpiexec -np 8` to speed it up. Replace 8 with the number of cores you have.
 python -m speaker_reassignment sc hyp.json
 python -m speaker_reassignment sc_step hyp.json
 python -m speaker_reassignment sc_poly hyp.json
