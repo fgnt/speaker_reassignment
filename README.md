@@ -9,6 +9,8 @@ Please read the paper for more information (ToDo: Add a hyperlink, once it is fr
 # Installation
 
 ```bash
+pip install git+https://github.com/fgnt/paderbox.git
+pip install git+https://github.com/fgnt/padertorch.git
 git clone https://github.com/fgnt/speaker_reassignment.git
 cd speaker_reassignment
 pip install -e .
@@ -16,8 +18,8 @@ pip install -e .
 
 # Usage
 
-Assuming, you have a JSON file `hyp.json` with the segments (see next section
-for the content), you can run the reassignments with the following commands:
+Assuming, you have a JSON file `hyp.json` with the segments (see "Input format"
+section later in this readme for the content), you can run the reassignments with the following commands:
 
 ```bash
 python -m speaker_reassignment sc hyp.json  # Just spectral clustering
@@ -26,6 +28,30 @@ python -m speaker_reassignment sc_poly hyp.json  # Spectral clustering with poly
 python -m speaker_reassignment kmeans hyp.json  # Just k-means
 ```
 Each will write a new JSON file, e.g. `hyp_SLR_SC_step0.25.json` with the reassignments.
+
+# Example
+
+For one of our experiments (TS-SEP + GSS), we uploaded all files.
+In [`egs/tssep_gss_wavLMASR`](https://github.com/fgnt/speaker_reassignment/tree/master/egs/tssep_gss_wavLMASR)
+you can find a `run.sh` script, that runs the speaker reassignment on the
+LibriCSS dataset. The script downloads the enhanced data, the `hyp.json` file
+and the `ref.stm` from
+[huggingface](https://huggingface.co/datasets/boeddeker/libri_css_tssep_gss_wavLMASR).
+It then runs multiple speaker reassignment and calculates
+the cpWER for each of them.
+Finally, it prints the cpWER for each speaker reassignment:
+```bash
+$ cat results.txt 
+file                           | error_rate | errors | length  | insertions | deletions | substitutions | missed_speaker | falarm_speaker | scored_speaker
+------------------------------ + ---------- + ------ + ------- + ---------- + --------- + ------------- + -------------- + -------------- + --------------
+hyp_cpwer.json                 |      5.36% |  5_760 | 107_383 |      1_538 |     2_003 |         2_219 |              0 |              0 |            480
+hyp_SLR_C7sticky_cpwer.json    |      5.16% |  5_545 | 107_383 |      1_446 |     1_911 |         2_188 |              0 |              0 |            480
+hyp_SLR_kmeans_cpwer.json      |      3.48% |  3_736 | 107_383 |        719 |     1_184 |         1_833 |              0 |              0 |            480
+hyp_SLR_SC_cpwer.json          |      3.67% |  3_940 | 107_383 |        792 |     1_257 |         1_891 |              0 |              0 |            480
+hyp_SLR_SC_step0.25_cpwer.json |      3.51% |  3_768 | 107_383 |        729 |     1_194 |         1_845 |              0 |              0 |            480
+hyp_SLR_SC_poly4_cpwer.json    |      3.50% |  3_763 | 107_383 |        727 |     1_192 |         1_844 |              0 |              0 |            480
+```
+
 
 # Input format
 

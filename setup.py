@@ -142,8 +142,16 @@ setup(
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        # 'mpi4py'
-        # 'peppercorn'
+        'numpy',
+        'scikit_learn',
+        'torch',
+        'fire',
+        'einops',
+
+        'dlp_mpi',
+        'paderbox',
+        'padertorch',
+        'meeteval',
     ],  # Optional
 
     # List additional groups of dependencies here (e.g. development
