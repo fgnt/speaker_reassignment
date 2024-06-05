@@ -206,8 +206,16 @@ class Prepare:
         if self.dump and dlp_mpi.IS_MASTER:
             dump_dir.mkdir(exist_ok=True, parents=True)
 
-        for session_id, data_rec in dlp_mpi.split_managed(
-                sorted(data_per_reco.items()), allow_single_worker=True):
+        # The NN checkpoint will be lazy downloaded if it is not on the disk
+        # and the first process will do that. The others will wait until the
+        # first has done that. The split_managed uses the first process as
+        # scheduler, hence it will cause a deadlock in combination with the
+        # lazy download. Therefore, use split_round_robin.
+        #
+        # for session_id, data_rec in dlp_mpi.split_managed(
+        #         sorted(data_per_reco.items()), allow_single_worker=True):
+        for session_id, data_rec in dlp_mpi.split_round_robin(
+                sorted(data_per_reco.items())):
             print(f'Process {session_id}')
 
             if 'emb' in data_rec[0]:
