@@ -1,10 +1,10 @@
 # Once more Diarization: Improving meeting transcription systems through segment-level speaker reassignment
 
-This repository contains the speaker reassignment tool, that was used in the
+This repository contains the speaker reassignment tool, that was proposed in the
 paper "Once more Diarization: Improving meeting transcription systems through
-segment-level speaker reassignment".
+segment-level speaker reassignment". The tool aims to correct speaker confusion errors in a meeting transcription system after an enhancement and diarization.
 
-Please read the paper for more information (ToDo: Add a hyperlink, once it is freely accessible).
+Please refer to the paper for more information ([Once more Diarization: Improving meeting transcription systems through segment-level speaker reassignment](http://www.arxiv.org/abs/2406.03155)).
 
 # Installation
 
@@ -18,8 +18,8 @@ pip install -e .
 
 # Usage
 
-Assuming, you have a JSON file `hyp.json` with the segments (see "Input format"
-section later in this readme for the content), you can run the reassignments with the following commands:
+For processing, a JSON file `hyp.json` containing the segments (see section "Input format"
+later in this readme for the content of this file) is assumed. Then, you can run the reassignments with the following commands:
 
 ```bash
 python -m speaker_reassignment sc hyp.json  # Just spectral clustering
@@ -27,17 +27,17 @@ python -m speaker_reassignment sc_step hyp.json  # Spectral clustering with step
 python -m speaker_reassignment sc_poly hyp.json  # Spectral clustering with polynomial attenuation
 python -m speaker_reassignment kmeans hyp.json  # Just k-means
 ```
-Each will write a new JSON file, e.g. `hyp_SLR_SC_step0.25.json` with the reassignments.
+Each command will create a new JSON file, e.g. `hyp_SLR_SC_step0.25.json` with the reassigned segments corresponding to the used options.
 
 # Example
 
-For one of our experiments (TS-SEP + GSS), we uploaded all files.
+For one of our experiments on LibriCSS (TS-SEP + GSS), all necessary files were uploaded.
 In [`egs/tssep_gss_wavLMASR`](https://github.com/fgnt/speaker_reassignment/tree/master/egs/tssep_gss_wavLMASR)
 you can find a `run.sh` script, that runs the speaker reassignment on the
 LibriCSS dataset. The script downloads the enhanced data, the `hyp.json` file
 and the `ref.stm` from
 [huggingface](https://huggingface.co/datasets/boeddeker/libri_css_tssep_gss_wavLMASR).
-It then runs multiple speaker reassignment and calculates
+It then runs the speaker reassignment for multiple parameterizations and calculates
 the cpWER for each of them.
 Finally, it prints the cpWER for each speaker reassignment:
 ```bash
@@ -86,7 +86,7 @@ are ignored.
 You may provide an `emb` and `emb_samples` field,
 see [Custom embedding extractor](#custom-embedding-extractor).
 
-The remaining fields are ignored.
+All remaining fields are ignored.
 
 # Custom embedding extractor
 
