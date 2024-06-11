@@ -2,7 +2,7 @@
 
 This repository contains the speaker reassignment tool, that was proposed in the
 paper "Once more Diarization: Improving meeting transcription systems through
-segment-level speaker reassignment". The tool aims to correct speaker confusion errors in a meeting transcription system after an enhancement and diarization.
+segment-level speaker reassignment". The tool aims to correct speaker confusion errors in a meeting transcription system after a diarization and enhancement.
 
 Please refer to the paper for more information ([Once more Diarization: Improving meeting transcription systems through segment-level speaker reassignment](http://www.arxiv.org/abs/2406.03155)).
 
