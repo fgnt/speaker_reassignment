@@ -1,5 +1,6 @@
 # Once more Diarization: Improving meeting transcription systems through segment-level speaker reassignment
 
+[![ISCA DOI](https://img.shields.io/badge/ISCA/DOI-10.21437/Interspeech.2024--1286-blue.svg)](https://doi.org/10.21437/Interspeech.2024-1286)
 [![arXiv](https://img.shields.io/badge/arXiv-2406.03155-b31b1b.svg)](https://arxiv.org/abs/2406.03155)
 
 
@@ -115,15 +116,17 @@ extractor.
 
 # Cite
 
-If you use this code, please cite the following paper:
+If you use this code, please cite the following paper (https://doi.org/10.21437/Interspeech.2024-1286):
 
 ```
-@inproceedings{Boeddeker2024,
-  title={Once more Diarization: Improving meeting transcription systems through segment-level speaker reassignment},
-  author={Boeddeker, Christoph and Cord-Landwehr, Tobias and Haeb-Umbach, Reinhold},
-  booktitle={Accepted for Interspeech 2024},
-  year={2024}
+@inproceedings{boeddeker24_interspeech,
+  title     = {Once more Diarization: Improving meeting transcription systems through segment-level speaker reassignment},
+  author    = {Boeddeker, Christoph and Cord-Landwehr, Tobias and Haeb-Umbach, Reinhold},
+  year      = {2024},
+  booktitle = {Interspeech 2024},
+  pages     = {1615--1619},
+  doi       = {10.21437/Interspeech.2024-1286},
+  issn      = {2958-1796},
 }
 ```
 
-ToDo: Update the citation once the paper is published.
